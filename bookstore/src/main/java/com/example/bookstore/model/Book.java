@@ -7,7 +7,7 @@ public class Book {
     private String isbn;
     private double price;
 
-    // Constructor
+   
     public Book(String title, String author, int publicationYear, String isbn, double price) {
         this.title = title;
         this.author = author;
@@ -16,7 +16,7 @@ public class Book {
         this.price = price;
     }
 
-    // Getters and setters
+   
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
