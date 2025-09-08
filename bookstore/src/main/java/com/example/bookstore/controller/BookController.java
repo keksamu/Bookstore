@@ -58,6 +58,7 @@ public class BookController {
     public String getMethodName(@PathVariable("id") Long id, Model model) {
         Book  book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
         model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
     }
 
