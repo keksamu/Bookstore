@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.bookstore.model.BookRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+
 
 
 @Controller
@@ -24,10 +27,13 @@ public class BookController {
         this.categoryRepository = categoryRepository;
     }   
 
-    @GetMapping("/index")
-    public Book getBook() {
-        return new Book("Clean Code", "Robert C. Martin", 2008, "978-0132350884", 29.99);
+    @GetMapping("/login")
+    public String login () {
+        return "/login";
     }
+    
+
+
 
     @RequestMapping(value="/booklist")
     public String bookList(Model model) {
@@ -48,15 +54,17 @@ public class BookController {
         return "redirect:/booklist";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") Long id) {
-        bookRepository.deleteById(id);
-        return "redirect:/booklist";
+    public String deleteBook(@PathVariable("id") Long bookId) {
+    bookRepository.deleteById(bookId);
+    return "redirect:../booklist";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/edit/{id}")
-    public String getMethodName(@PathVariable("id") Long id, Model model) {
-        Book  book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+    public String editBook(@PathVariable("id") Long bookId, Model model) {
+        Book book = bookRepository.findById(bookId).orElse(null);
         model.addAttribute("book", book);
         model.addAttribute("categories", categoryRepository.findAll());
         return "editbook";
@@ -68,6 +76,8 @@ public class BookController {
         bookRepository.save(updatedBook);
         return "redirect:/booklist";
     }
+
+    
 
     
     

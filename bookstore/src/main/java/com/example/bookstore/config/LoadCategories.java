@@ -1,6 +1,6 @@
 package com.example.bookstore.config;
 
-
+/* 
 
 import com.example.bookstore.model.Category;
 import com.example.bookstore.model.CategoryRepository;
@@ -19,4 +19,4 @@ public class LoadCategories {
             categoryRepository.save(new Category("Networking"));
         };
     }
-}
+}*/
