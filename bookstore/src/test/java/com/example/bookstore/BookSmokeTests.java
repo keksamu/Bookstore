@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.security.test.context.support.WithMockUser;
 
 
 
@@ -25,12 +26,14 @@ public class BookSmokeTests {
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
     void testBookListPageIsAccessible() throws Exception {
         mockMvc.perform(get("/booklist"))
                .andExpect(status().isOk());
     }
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
     void testAddBookPageIsAccessible() throws Exception {
         mockMvc.perform(get("/addbook"))
                .andExpect(status().isOk());
